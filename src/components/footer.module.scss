@@ -1,0 +1,35 @@
+.footerContainer {
+    border-top: 1px solid white ;
+    background-color: var(--gray);
+    width: calc(100%);
+
+    .footerWrapper {
+        display: flex;
+        height: 50px;
+        align-items: center;
+        justify-content: end;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        .footerList {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            list-style: none;
+            li {
+
+                a {
+                    display: flex;
+
+                    border-radius: 6px;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+}

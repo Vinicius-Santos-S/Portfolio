@@ -1,0 +1,89 @@
+.projectContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .projectWrapper {
+        padding: 0px 20px 0px 20px;
+        width: 100%;
+        max-width: 1100px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .filterBar {
+            display: flex;
+            gap: 5px;
+            max-width: 550px;
+            .filterButton {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: none;
+                padding: 5px;
+                width: 100px;
+                border: 1px solid white;
+                background-Color: rgba(222, 222, 222, 0.1);
+            }
+        }
+
+        .projectList {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 5px;
+    
+            .projectCard {
+                border: 1px solid white;
+                height: 200px;
+                display: flex;
+                flex-direction: column;
+
+                h3 {
+                    background-color: white;
+                    color: var(--gray);
+                    text-align: center;
+                }
+
+                .projectInfo {
+                    display: flex;
+                    height: 100%;
+                    justify-content: space-between;
+                    flex-direction: column;
+                    gap: 6px;
+                    padding: 10px;
+
+                    p {
+                        text-align: center;
+                        font-size: 13px;
+                    }
+
+                    .projectSeeLanguage {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        // padding: 0px 20px 0px 20px;
+
+                        a {
+                            text-decoration: none;
+                            border: 1px solid white;
+                            padding: 5px;
+                        }
+                        .projectLanguageBox {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 5px;
+
+                            .projectImage {
+                                border: 1px solid greenyellow;
+                                height: 25px;
+                                width: 25px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
