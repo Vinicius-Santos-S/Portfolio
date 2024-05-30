@@ -12,7 +12,6 @@ import AppStyle from "./App.module.scss"
 
 const App = () => {
     const location = useLocation()
-
     return (
         <div className={AppStyle.container}>
             <NavBar currentPath={location.pathname}/>
