@@ -1,13 +1,18 @@
 interface projectDataType {
-    name: string,
+    name: string
     info: string
-    proLanguage: string,
-    imageId: string,
-    imageUrl: string,
+    proLanguage: string
+    imageId: string
+    imageUrl: string
     iconUrl: string
     link: string
 };
 
+interface routeData {
+    name: string
+    link: string
+    iconUrl: React.SVGProps<SVGSVGElement>
+}
 
 
-export default projectDataType
+export type {projectDataType, routeData};

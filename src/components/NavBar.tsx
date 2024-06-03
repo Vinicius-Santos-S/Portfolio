@@ -1,46 +1,59 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import navBarStyle from "./navBar.module.scss"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+import MobileMenu from "./mobileMenu"
+import { routeData } from "../types"
+
+import { ReactComponent as MenuIcon } from "../icon/menuIcon.svg"
+import { ReactComponent as HomeIcon } from "../icon/homeIcon.svg"
+import { ReactComponent as AboutIcon }  from "../icon/personIcon.svg"
+import { ReactComponent as ProjectsIcon }  from "../icon//projectsIcon.svg"
 
 interface IProps {
-  currentPath:string
+  currentPath: string
 }
 
 const NavBar: React.FC<IProps> = ({ currentPath }) => {
-  interface linkdata {
-    name: string
-    link: string
-  }
+  const [isOpenMenu, setIsOpenMenu] = useState(false)
 
-  const linksData: linkdata[] = [
+  const linksData: routeData[] = [
     {
       name: "Home",
-      link: "/"
+      link: "/",
+      iconUrl: HomeIcon
     },
     {
       name: "About",
-      link: "/about"
+      link: "/about",
+      iconUrl: AboutIcon
     },
     {
       name: "Projects",
-      link: "/projects"
+      link: "/projects",
+      iconUrl: ProjectsIcon
     }
   ]
 
+  const handleMenuExit = () => {
+    setIsOpenMenu(!isOpenMenu)
+  }
+
   return (
     <nav className={navBarStyle.navbarContainer}>
+      <MenuIcon/>
       <div className={navBarStyle.navbarWrapper}>
         <h1>somethingHere</h1>
-        <ul 
-          className={navBarStyle.navbarList}
+        <ul
+          className={navBarStyle.navbarListDesktop}
         >
           {
-            linksData.map((route, index:any) =>
+            linksData.map((route, index: any) =>
               <Link key={index} to={route.link}>
                 <motion.li
                   animate={{
                     backgroundColor: currentPath === route.link ? "rgba(222, 222, 222, 1)" : "rgba(222, 222, 222, 0.1)",
-                    color: currentPath === route.link ? "rgb(27, 27, 27)" : "rgb(222, 222, 222)" 
+                    color: currentPath === route.link ? "rgb(27, 27, 27)" : "rgb(222, 222, 222)"
                   }}
                   whileHover={{
                     backgroundColor: "rgba(222, 222, 222, 1)",
@@ -53,6 +66,23 @@ const NavBar: React.FC<IProps> = ({ currentPath }) => {
             )
           }
         </ul>
+        <motion.div
+          className={navBarStyle.navbarMobileButton}
+          onClick={() => setIsOpenMenu(!isOpenMenu)}
+          style={{
+            backgroundImage: `url(${menuIcon})`
+          }}
+        />
+        <AnimatePresence>
+          {
+            isOpenMenu &&
+            <MobileMenu 
+              data={linksData}
+              currentPath={currentPath}
+              onMouseOut={handleMenuExit}
+            />
+          }
+        </AnimatePresence>
       </div>
     </nav>
   )

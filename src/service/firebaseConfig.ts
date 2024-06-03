@@ -3,18 +3,17 @@ import { getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
-import projectDataType from '../types'
+import { projectDataType } from '../types'
 
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAjz6iI9xECi6GmqbZfZgfMkq3PQGeJVcg",
-  authDomain: "portfolio-c7e4b.firebaseapp.com",
-  databaseURL: "https://portfolio-c7e4b-default-rtdb.firebaseio.com",
-  projectId: "portfolio-c7e4b",
-  storageBucket: "portfolio-c7e4b.appspot.com",
-  messagingSenderId: "197167269959",
-  appId: "1:197167269959:web:4dc44552f382029019c962"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase and database
@@ -40,6 +39,8 @@ export const fetchingProjects = async () => {
 
 
       return projectsData;
+
+      
     } catch (error) {
       console.error("Erro ao buscar documentos: ", error);
     }
