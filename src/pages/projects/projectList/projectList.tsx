@@ -1,9 +1,10 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 import Project from './project'
 import projectStyle from '../projects.module.scss'
 
-import projectDataType from '../../../types'
+import { projectDataType } from '../../../types'
+import { useEffect, useState } from 'react'
 
 interface IProps {
   data: projectDataType[]
@@ -14,7 +15,12 @@ const ProjectList: React.FC<IProps> = ({ data, filter }) => {
   type KeyOf<T> = keyof T;
 
   function filterByKey<T>(array: T[], key: KeyOf<T>, value: any): T[] {
-    return array.filter(item => item[key] === value);
+    if (value) {
+      return array.filter(item => item[key] === value);
+    }
+    else {
+      return array
+    }
   }
 
   const listAnimations = {
@@ -36,53 +42,26 @@ const ProjectList: React.FC<IProps> = ({ data, filter }) => {
     hovering: { scale: 1.07 }
   }
 
-  if (filter === "") {
-    return (
-      <motion.ul
-        className={projectStyle.projectList}
-        key={"withoutFilter"}
-        variants={listAnimations}
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-      >
-        {
-          data.map((project, index) =>
-            <Project
-              key={index}
-              animation={listItemAnimations}
-              project={project}
-            />
-          )}
-      </motion.ul>
-    )
-  }
-  else {
-    return (
-      <motion.ul
-        className={projectStyle.projectList}
-        key={"withFilter"}
-        initial="hidden"
-        animate="visible"
-        variants={listAnimations}
+  return (
+    <motion.ul
+      className={projectStyle.projectList}
+      key={filter}
+      initial="hidden"
+      animate="visible"
+      variants={listAnimations}
+    >
+      {
+        filterByKey(data, "proLanguage", filter).map((project, index) =>
+          <Project
+            key={index}
+            animation={listItemAnimations}
+            project={project}
+          />
+        )
+      }
 
-      >
-        {
-          filterByKey(data, "proLanguage", filter).map((project, index) =>
-            <Project
-              key={index}
-              animation={listItemAnimations}
-              project={project}
-            />
-          )
-        }
-
-      </motion.ul>
-
-    )
-  }
-
-
+    </motion.ul>
+  )
 }
 
 

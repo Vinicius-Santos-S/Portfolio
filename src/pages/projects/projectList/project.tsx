@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { isMobile } from 'react-device-detect';
 
 import projectStyle from '../projects.module.scss'
 
-import projectDataType from '../../../types'
+import { projectDataType } from '../../../types'
 
 interface keyIndex {
     project: projectDataType
@@ -46,7 +46,7 @@ const Project: React.FC<keyIndex> = ({ project, animation }) => {
                             See project!
                         </motion.a>
                         <div className={projectStyle.projectLanguageBox}>
-                            <p>{project.proLanguage}</p>
+                            <p style={{ color: project.prolanguageColor }}>{project.proLanguage}</p>
                             <div
                                 className={projectStyle.projectLanguageIcon}
                                 style={{
@@ -91,7 +91,7 @@ const Project: React.FC<keyIndex> = ({ project, animation }) => {
                                 See project!
                             </motion.a>
                             <div className={projectStyle.projectLanguageBox}>
-                                <p>{project.proLanguage}</p>
+                                <p style={{ color: project.prolanguageColor }}>{project.proLanguage}</p>
                                 <div
                                     className={projectStyle.projectLanguageIcon}
                                     style={{

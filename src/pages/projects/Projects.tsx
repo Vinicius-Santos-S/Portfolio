@@ -11,6 +11,7 @@ import projectStyle from './projects.module.scss'
 import { projectDataType}  from '../../types'
 
 import testeImage from  '../../1.jpg'
+import testeImageReact from  '../../ReactIcon.png'
 
 const Projects = () => {
   const [projectsData, setProjectsData] = useState<projectDataType[]>([]);
@@ -20,37 +21,41 @@ const Projects = () => {
     {
       name: 'nomeprojeto',
       info: 'infoo',
-      proLanguage: 'infoo',
+      proLanguage: 'React',
+      prolanguageColor: 'rgb(97, 219, 251)',
       imageId: 'infoo',
       imageUrl: testeImage,
-      iconUrl: testeImage,
+      iconUrl: testeImageReact,
       link: 'infoo'
     },
     {
       name: 'nomeprojeto',
       info: 'infoo',
       proLanguage: 'infoo',
+      prolanguageColor: 'rgb(97, 219, 251)',
       imageId: 'infoo',
-      imageUrl: 'infoo',
-      iconUrl: 'infoo',
+      imageUrl: testeImage,
+      iconUrl: testeImageReact,
       link: 'infoo'
     },
     {
       name: 'nomeprojeto',
       info: 'infoo',
       proLanguage: 'infoo',
+      prolanguageColor: 'rgb(97, 219, 251)',
       imageId: 'infoo',
-      imageUrl: 'infoo',
-      iconUrl: 'infoo',
+      imageUrl: testeImage,
+      iconUrl: testeImageReact,
       link: 'infoo'
     },
     {
       name: 'nomeprojeto',
       info: 'infoo',
-      proLanguage: 'infoo2',
+      proLanguage: 'infoo',
+      prolanguageColor: 'rgb(97, 219, 251)',
       imageId: 'infoo',
-      imageUrl: 'infoo',
-      iconUrl: 'infoo',
+      imageUrl: testeImage,
+      iconUrl: testeImageReact,
       link: 'infoo'
     },
   ]
@@ -74,15 +79,9 @@ const Projects = () => {
 
   return (
     <Template>
-      <main className={projectStyle.projectContainer}>
-        <div className={projectStyle.projectWrapper}>
-          <h1>Projects</h1>
-          <Filter data={TestData} filter={currentFilter} onUpdateFilter={updateFilter}/>
-          <AnimatePresence mode='wait'>
-            <ProjectList data={TestData} filter={currentFilter}/>
-          </AnimatePresence>
-        </div>
-      </main>
+      <h1>Projects</h1>
+      <Filter data={TestData} filter={currentFilter} onUpdateFilter={updateFilter}/>
+      <ProjectList data={TestData} filter={currentFilter}/>
     </Template>
   )
 }
