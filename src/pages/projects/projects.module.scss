@@ -1,86 +1,97 @@
-.filterBar {
+@import '../../variables.module';
+.mainDiv {
     display: flex;
-    gap: 5px;
-    max-width: 550px;
+    flex-direction: column;
+    gap: 20px;
 
-    .filterButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        padding: 5px;
-        width: 100px;
-        border: 1px solid white;
-        background-Color: rgba(222, 222, 222, 0.1);
-    }
-}
-
-.projectList {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-
-    .projectCard {
-        position: relative;
-        border: 1px solid white;
-        height: 200px;
+    .container {
         display: flex;
         flex-direction: column;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-
-        .projectInfo {
-            background-color: rgba(0, 0, 0, 0.548);
-            opacity: 0;
-            position: absolute;
+        gap: 20px;
+        .filterBar {
             display: flex;
+            gap: 5px;
             width: 100%;
-            height: 100%;
-            justify-content: space-between;
-            flex-direction: column;
-            gap: 6px;
-            padding: 10px;
-
-            h3 {
-                background-color: rgba(255, 255, 255, 0);
-                color: var(white);
-                text-align: center;
-            }
-
-            p {
-                text-align: center;
-                font-size: 13px;
-            }
-
-            .projectSeeLanguage {
+            .filterButton {
+                box-shadow: inset 0px -32px 25px -13px rgba(126, 25, 70, 0.705);
+                cursor: pointer;
+                width: 80px;
+                padding: 5px 20px 5px 20px;
                 display: flex;
-                justify-content: space-between;
+                justify-content: center;
                 align-items: center;
-                // padding: 0px 20px 0px 20px;
-
-                a {
-                    text-decoration: none;
-                    border: 1px solid white;
-                    padding: 5px;
-                }
-
-                .projectLanguageBox {
+                border-radius: 10px;
+            }
+        }
+        .guideText {
+            color: $murrey;
+            font-size: 15px;
+            text-align: right;
+        }
+        .projectList {
+            display: grid;
+            gap: 25px;
+            list-style: none;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            .projectCard {
+                background-color: rgb(32, 32, 32);
+                // box-shadow: inset 0px -32px 25px -13px rgba(0,0,0,0.1);
+                background-position: center;
+                background-size: cover;
+                border-radius: 15px;
+                height: 100%;
+                min-height: 200px;
+                overflow: hidden;
+                .projectInfo {
+                    gap: 10px;
+                    background-color: rgba(22, 22, 22, 0.781);
+                    box-shadow: inset 0px -32px 25px -13px $murrey;
+                    opacity: 0;
                     display: flex;
-                    justify-content: center;
+                    flex-direction: column;
+                    justify-content: space-between;
                     align-items: center;
-                    gap: 5px;
-
-                    .projectLanguageIcon {
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-size: contain;
-                        height: 25px;
-                        width: 25px;
+                    padding: 20px;
+                    height: 100%;
+                    h3 {
+                        font-size: 20px;
+                        font-weight: 800;
+                    }
+                    p {
+                        font-size: 13px;
+                    }
+                    .projectSeeLanguage {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 100%;
+                        gap: 20px;
+                        a {
+                            text-decoration: none;
+                            border: 1px solid white;
+                            padding: 5px 10px 5px 10px;
+                            border-radius: 15px;
+                            font-size: 13px;
+                        }
+                        .projectLanguageBox {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 5px;
+                            font-size: 12px;
+    
+                            .projectLanguageIcon {
+                                background-position: center;
+                                background-size: cover;
+                                width: 20px;
+                                height: 20px;
+                            }
+                        }
                     }
                 }
             }
+        
         }
     }
+
 }

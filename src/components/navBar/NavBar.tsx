@@ -5,14 +5,15 @@ import { motion, AnimatePresence } from "framer-motion"
 import MobileMenu from "./mobileMenu"
 import { routeData } from "../../types"
 import { MotionMenuIcon, MotionHomeIcon, MotionAboutIcon, MotionProjectsIcon } from "../../svgImports"
+import variables from '../../_variables.module.scss';
 
 interface IProps {
   currentPath: string
+  currentColor: string
 }
 
-const NavBar: React.FC<IProps> = ({ currentPath }) => {
+const NavBar: React.FC<IProps> = ({ currentPath, currentColor }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
-
   const linksData: routeData[] = [
     {
       name: "Home",
@@ -35,12 +36,20 @@ const NavBar: React.FC<IProps> = ({ currentPath }) => {
     setIsOpenMenu(!isOpenMenu)
   }
 
+  function getIndexIarrayOfObjects(currentPath:string) {
+    for(let index = 0; index < linksData.length; index++){
+      if((linksData[index]["link"]) === currentPath){
+        return index
+      }
+    }
+    return 1
+  }
 
   return (
     
     <nav className={navBarStyle.navbarContainer}>
       <div className={navBarStyle.navbarWrapper}>
-        <h1>somethingHere</h1>
+        <h1>a</h1>
         <ul
           className={navBarStyle.navbarListDesktop}
         >
@@ -48,6 +57,9 @@ const NavBar: React.FC<IProps> = ({ currentPath }) => {
             linksData.map((route, index: any) =>
               <Link key={index} to={route.link}>
                 <motion.li
+                  animate={{
+                    color: currentPath === route.link ? currentColor : variables.babyPowder
+                  }}
                 >
                   {route.name}
                 </motion.li>
@@ -56,7 +68,8 @@ const NavBar: React.FC<IProps> = ({ currentPath }) => {
           }
           <motion.div className={navBarStyle.undelineBar}
             animate={{
-              // left: `${linksData.indexOf(currentPath) * 100}px`,
+              left: `${getIndexIarrayOfObjects(currentPath) * 110}px`,
+              backgroundColor: currentColor
             }}
             transition={{
               type: "spring",
@@ -65,7 +78,7 @@ const NavBar: React.FC<IProps> = ({ currentPath }) => {
             }}
           />
         </ul>
-        {/* <MotionMenuIcon
+        <MotionMenuIcon
           className={navBarStyle.navbarMobileButton}
           onClick={handleMenuExit}
         />
@@ -75,10 +88,11 @@ const NavBar: React.FC<IProps> = ({ currentPath }) => {
               <MobileMenu 
                 data={linksData}
                 currentPath={currentPath}
+                currentColor={currentColor}
                 setToCloseMenu={handleMenuExit}
               />
           }
-        </AnimatePresence> */}
+        </AnimatePresence>
       </div>
     </nav>
   )

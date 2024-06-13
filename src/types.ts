@@ -6,11 +6,12 @@ interface projectDataType {
     info: string
     proLanguage: string
     prolanguageColor: string
-    imageId: string
-    imageUrl: string
-    iconUrl: string
     link: string
 };
+interface clientSideProjectDataType extends projectDataType {
+    proLanguageIconUrl?: string
+    projectImageUrl?: string
+}
 
 interface routeData {
     name: string
@@ -25,4 +26,4 @@ interface contactData {
 }
 
 
-export type {projectDataType, routeData, contactData};
+export type {projectDataType, clientSideProjectDataType, routeData, contactData};

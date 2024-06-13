@@ -3,15 +3,16 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import navBarStyle from "./navBar.module.scss";
 import { routeData } from "../../types";
-
+import styleVariables from "../../_variables.module.scss"
 
 interface IProps {
   data: routeData[];
   currentPath: string;
+  currentColor: string;
   setToCloseMenu: () => void;
 }
 
-const MobileMenu: react.FC<IProps> = ({ data, currentPath, setToCloseMenu }) => {
+const MobileMenu: react.FC<IProps> = ({ data, currentPath, currentColor, setToCloseMenu }) => {
   const boxRef = useRef<HTMLUListElement>(null);
 
 
@@ -38,7 +39,10 @@ const MobileMenu: react.FC<IProps> = ({ data, currentPath, setToCloseMenu }) => 
         right: -200
       }}
       animate={{
-        right: 0
+        right: 0,
+        backgroundColor: styleVariables.black,
+        borderLeft: `2px solid ${currentColor}`,
+        boxShadow: `inset -20px 0px 100px -50px ${currentColor}`
       }}
       exit={{
         right: -200
@@ -46,6 +50,7 @@ const MobileMenu: react.FC<IProps> = ({ data, currentPath, setToCloseMenu }) => 
       transition={{ 
         ease: "easeOut", 
       }}
+      
     >
       {data.map((route, index: any) => (
         <Link key={index} to={route.link}>

@@ -1,12 +1,99 @@
-import Template from '../template'
-import homeStyle from './home.module.scss'
+import React, { useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { Link } from 'react-router-dom'
+import homeStyles from './home.module.scss';
+import styleVariables from '../../_variables.module.scss';
 
-function App() {
-  return (
-      <Template>
-          <h1>Home</h1>
-      </Template>
-  )
+interface Iprops {
+  currentColor: string;
 }
 
-export default App
+const Home: React.FC<Iprops> = ({ currentColor }) => {
+
+  const animationsInstructions = {
+    main: {
+      initialMain: { x: 1000 },
+      animateMain: { x: 0 },
+      exitMain: { x: -1000 },
+    },
+    title: {
+      animateTitle: { color: currentColor }
+    },
+    underText: {
+      initialUnderText: { opacity: 0 },
+      animateUnderText: { opacity: 1, transition: { delay: 0.6 } },
+    },
+    button: {
+      initialButton: { opacity: 0 },
+      animateButton: { opacity: 1, transition: { delay: 0.6 } },
+      hovering: { backgroundColor: styleVariables.babyPowder, color: styleVariables.black }
+    }
+
+  }
+
+  const mainAnimation = useAnimation();
+  const titleAnimation = useAnimation();
+  const underTextAnimation = useAnimation();
+  const buttonAnimation = useAnimation();
+
+  useEffect(() => {
+    const sequence = async () => {
+      await mainAnimation.start('animateMain');
+      await titleAnimation.start('animateTitle');
+      await underTextAnimation.start('animateUnderText');
+      await buttonAnimation.start('animateButton');
+    };
+
+    sequence();
+  }, [mainAnimation, titleAnimation, underTextAnimation, buttonAnimation]);
+
+  return (
+    <motion.div className={homeStyles.mainDiv}
+      variants={animationsInstructions.main}
+      initial="initialMain"
+      animate={mainAnimation}
+      exit="exitMain"
+      transition={{ 
+        type: 'spring', 
+        stiffness: 120, 
+        damping: 20, 
+        duration: 0.5, 
+        ease: 'easeOut'
+      }}
+    >
+      <div className={homeStyles.welcomeContainer}>
+        <motion.h1
+          variants={animationsInstructions.title}
+          animate={titleAnimation}
+        >
+          Hello
+        </motion.h1>
+
+        <motion.p
+          variants={animationsInstructions.underText}
+          initial="initialUnderText"
+          animate={underTextAnimation}
+        >
+          Welcome to my portfolio
+        </motion.p>
+
+        <Link to={"/about"}>
+          <motion.div 
+            className={homeStyles.button}
+            variants={animationsInstructions.button}
+            initial="initialButton"
+            animate={buttonAnimation}
+            whileHover="hovering"
+          >
+            About me
+          </motion.div>
+        </Link>
+      </div>
+      <div className={homeStyles.welcomeImage}/>
+
+
+    </motion.div>
+  );
+};
+
+export default Home;

@@ -1,0 +1,13 @@
+$amaranth-purple: rgba(166, 52, 70, 1);
+$baby-powder: rgba(251, 254, 249, 1);
+$lapis-lazuli: rgba(12, 98, 145, 1);
+$black: rgba(0, 0, 4, 1);
+$murrey: rgba(126, 25, 70, 1);
+
+:export {
+    amaranthPpurple: $amaranth-purple;
+    babyPowder: $baby-powder;
+    lapisLazuli: $lapis-lazuli;
+    black: $black;
+    murrey: $murrey;
+}

@@ -1,13 +1,9 @@
-import { motion, AnimatePresence } from 'framer-motion'
-
+import { motion } from 'framer-motion'
 import Project from './project'
 import projectStyle from '../projects.module.scss'
-
-import { projectDataType } from '../../../types'
-import { useEffect, useState } from 'react'
-
+import { clientSideProjectDataType } from '../../../types'
 interface IProps {
-  data: projectDataType[]
+  data: clientSideProjectDataType[]
   filter: string
 }
 
@@ -43,24 +39,27 @@ const ProjectList: React.FC<IProps> = ({ data, filter }) => {
   }
 
   return (
-    <motion.ul
-      className={projectStyle.projectList}
-      key={filter}
-      initial="hidden"
-      animate="visible"
-      variants={listAnimations}
-    >
-      {
-        filterByKey(data, "proLanguage", filter).map((project, index) =>
-          <Project
-            key={index}
-            animation={listItemAnimations}
-            project={project}
-          />
-        )
-      }
+    <>
+      <motion.ul
+        className={projectStyle.projectList}
+        key={filter}
+        initial="hidden"
+        animate="visible"
+        variants={listAnimations}
+      >
+        
+        {
+          filterByKey(data, "proLanguage", filter).map((project, index) =>
+            <Project
+              key={index}
+              animation={listItemAnimations}
+              project={project}
+            />
+          )
+        }
 
-    </motion.ul>
+      </motion.ul>
+    </>
   )
 }
 

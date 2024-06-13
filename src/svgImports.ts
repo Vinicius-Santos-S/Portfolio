@@ -7,6 +7,7 @@ import { ReactComponent as ProjectsIconSVG } from "./icon/navBarIcons/projectsIc
 
 import { ReactComponent as GithubIcon } from './icon/footerIcons/githubIcon.svg'
 import { ReactComponent as LinkedinIcon } from './icon/footerIcons/linkedinIcon.svg'
+import { ReactComponent as LoadingIcon } from './icon/loadingIcon/loadingIcon.svg'
 
 const MotionMenuIcon = motion(MenuIconSVG);
 const MotionHomeIcon = motion(HomeIconSVG);
@@ -16,8 +17,8 @@ const MotionProjectsIcon = motion(ProjectsIconSVG);
 const MotionGitHubIcon = motion(GithubIcon);
 const MotionLinkendinIcon = motion(LinkedinIcon);
 
+const MotionLoadingIcon = motion(LoadingIcon);
 
 
 
-
-export { MotionMenuIcon, MotionHomeIcon, MotionAboutIcon, MotionProjectsIcon, MotionGitHubIcon, MotionLinkendinIcon }
+export { MotionMenuIcon, MotionHomeIcon, MotionAboutIcon, MotionProjectsIcon, MotionGitHubIcon, MotionLinkendinIcon, MotionLoadingIcon }

@@ -1,1 +1,100 @@
+@import '../../variables.module';
+
+.mainDiv {
+    display: flex;
+    flex-direction: column;
+    .aboutCeapAndMe {
+        border: 1px solid red;
+        display: flex;
+        gap: 50px;
+        min-height: 250px;
+        
+        .info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            h2 {
+                font-size: 30px;
+                text-align: center;
+            }
+            p {
+                text-align: center;
+            }
+        }
+        .ceapImage {
+            background-image: url('../../images/Logo_ceap_offslogam_png-1.png');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            border-radius: 15px;
+            box-shadow: inset 0px -32px 25px -13px rgba(12, 99, 145, 0.384);
+            width: 100%;
+            min-width: 250px;
+            height: 250px;
+        }
+    }
+    @media (max-width: 565px) {
+        .aboutCeapAndMe {
+            flex-direction: column;
+        }
+    }
+
+    .gridInView {
+        margin: 100px 0px 100px 0px;
+        border: 1px solid red;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 100px;
+        .proficiencesContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            .proficiencesGrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                .proficienceDiv {
+                    display: flex;
+                    flex-direction: column;
+                    border: 1px solid greenyellow;
     
+                    .icon {
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        height: 70px;
+                    }
+                    h3 {
+                        text-align: center;   
+                    }
+                }
+            }
+        }
+    
+        .buttonContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            a {
+                width: 180px;
+                text-decoration: none;
+                color: $baby-powder;
+                display: flex;
+                .button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 30px;
+                    padding: 15px 20px 15px 20px;
+                    background-color: $lapis-lazuli;
+                    border-radius: 15px;
+                }
+            }
+        }
+    }
+
+
+
+}
+

@@ -3,8 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
-import { projectDataType } from '../types'
-
+import { projectDataType, clientSideProjectDataType } from '../types'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,35 +18,34 @@ const firebaseConfig = {
 // Initialize Firebase and database
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
 const storage = getStorage(app, "gs://portfolio-c7e4b.appspot.com");
 
-export const fetchingProjects = async () => {
+export async function readDocuments(collectionName: string): Promise<projectDataType[]> {
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  
+  const promises = querySnapshot.docs.map(async (doc) => {
+    const projectData = doc.data() as clientSideProjectDataType;
+    
     try {
-      const querySnapshot = await getDocs(collection(db, "Projects"));
-      const promises = querySnapshot.docs.map(async (doc) => {
-        const projectData = doc.data() as projectDataType;
-        const imageUrl = await getDownloadURL(ref(storage, `images/${doc.id}.jpg`));
-        const iconUrl = await getDownloadURL(ref(storage, `languageIcons/${doc.data().proLanguage}Icon.png`));
-        projectData.imageUrl = imageUrl;
-        projectData.iconUrl = iconUrl
-        return projectData;
-      });
-      
-
-      const projectsData = await Promise.all(promises);
-
-
-      return projectsData;
-
-      
+      const imageUrl = await getDownloadURL(ref(storage, `images/${doc.id}.jpg`));
+      projectData.projectImageUrl = imageUrl;
     } catch (error) {
-      console.error("Erro ao buscar documentos: ", error);
+      console.error(`Error getting image URL for document ${doc.id}: `, error);
     }
-    return [];
-  };
+    
+    try {
+      const iconUrl = await getDownloadURL(ref(storage, `proLanguagesIcons/${projectData.proLanguage}Icon.png`));
+      projectData.proLanguageIconUrl = iconUrl;
+    } catch (error) {
+      console.error(`Error getting icon URL for language ${projectData.proLanguage}: `, error);
+    }
+    
+    return projectData;
+  });
 
-
+  const projectsData = await Promise.all(promises);
+  return projectsData;
+}
 
 
 

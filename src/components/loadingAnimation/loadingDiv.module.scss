@@ -1,0 +1,16 @@
+@import '../../variables.module';
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-image: url();
+    .spinner {
+        height: 50px;
+        width: 50px;
+    }
+    h2 {
+        color: $murrey;
+    }
+}

@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-
 import projectStyle from "./projects.module.scss";
-
 import {projectDataType} from "../../types";
+import styleVariables from '../../_variables.module.scss';
 
 interface IProps {
   data: projectDataType[];
@@ -42,14 +41,14 @@ const Filter: React.FC<IProps> = ({ data, filter, onUpdateFilter }) => {
           animate={{
             backgroundColor:
               filter === language
-                ? "rgba(222, 222, 222, 1)"
-                : "rgba(222, 222, 222, 0.1)",
+                ? styleVariables.murrey
+                : styleVariables.black,
             color:
-              filter === language ? "rgb(27, 27, 27)" : "rgb(222, 222, 222)",
+              filter === language ? styleVariables.babyPowder : styleVariables.babyPowder,
           }}
           whileHover={{
-            backgroundColor: "rgba(222, 222, 222, 1)",
-            color: "rgb(27, 27, 27)",
+            backgroundColor: styleVariables.murrey,
+            color: styleVariables.babyPowder,
           }}
         >
           {language}
