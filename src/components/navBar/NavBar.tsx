@@ -49,7 +49,7 @@ const NavBar: React.FC<IProps> = ({ currentPath, currentColor }) => {
     
     <nav className={navBarStyle.navbarContainer}>
       <div className={navBarStyle.navbarWrapper}>
-        <h1>a</h1>
+        <h1>Naooto</h1>
         <ul
           className={navBarStyle.navbarListDesktop}
         >

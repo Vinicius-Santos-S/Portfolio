@@ -1,23 +1,21 @@
 import { motion } from 'framer-motion'
 import Project from './project'
 import projectStyle from '../projects.module.scss'
-import { clientSideProjectDataType } from '../../../types'
+import { projectDataType } from '../../../types'
 interface IProps {
-  data: clientSideProjectDataType[]
+  data: projectDataType[]
   filter: string
 }
 
 const ProjectList: React.FC<IProps> = ({ data, filter }) => {
-  type KeyOf<T> = keyof T;
-
-  function filterByKey<T>(array: T[], key: KeyOf<T>, value: any): T[] {
-    if (value) {
-      return array.filter(item => item[key] === value);
+  const filterByTechName = (projects: projectDataType[], techName: string): projectDataType[] => {
+    if(filter){
+      return projects.filter(project => project.technology.techName === techName);
     }
     else {
-      return array
+      return projects
     }
-  }
+  };
 
   const listAnimations = {
     visible: {
@@ -48,8 +46,17 @@ const ProjectList: React.FC<IProps> = ({ data, filter }) => {
         variants={listAnimations}
       >
         
-        {
+        {/* {
           filterByKey(data, "proLanguage", filter).map((project, index) =>
+            <Project
+              key={index}
+              animation={listItemAnimations}
+              project={project}
+            />
+          )
+        } */}
+        {
+          filterByTechName(data, filter).map((project, index) =>
             <Project
               key={index}
               animation={listItemAnimations}

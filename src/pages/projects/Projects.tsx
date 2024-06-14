@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useAnimation} from 'framer-motion';
-import { readDocuments } from '../../service/firebaseConfig';
+import { fetchProjectsAndTechnologies } from '../../service/firebaseConfig';
 import { isMobile } from 'react-device-detect';
 
 import ProjectList from "./projectList/projectList";
@@ -9,7 +9,7 @@ import LoadingDiv from '../../components/loadingAnimation/loadingDiv';
 
 import projectStyle from './projects.module.scss'
 
-import { clientSideProjectDataType }  from '../../types'
+import { projectDataType }  from '../../types'
 // import testeImage from  '../../1.jpg'
 // import testeImageReact from  '../../icon/proficiencesIcons/reactIcon.png'
 
@@ -18,7 +18,7 @@ interface Iprop {
 }
 
 const Projects: React.FC<Iprop> = ({currentColor}) => {
-  const [projectsData, setProjectsData] = useState<clientSideProjectDataType[]>([]);
+  const [projectsData, setProjectsData] = useState<projectDataType[]>([]);
   const [currentFilter, setCurrentFilter] = useState<string>("");
   const [isloading, setIsLoading] = useState(true)
 
@@ -38,7 +38,7 @@ const Projects: React.FC<Iprop> = ({currentColor}) => {
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true)
-      const fetchedData = await readDocuments('Projects');
+      const fetchedData = await fetchProjectsAndTechnologies();
       setProjectsData(fetchedData);
       setIsLoading(false)
     }
@@ -112,7 +112,7 @@ const Projects: React.FC<Iprop> = ({currentColor}) => {
         <Filter data={projectsData} filter={currentFilter} onUpdateFilter={updateFilter} />
         <AnimatePresence mode='wait'>
           { isloading ?
-            <LoadingDiv/>
+            <LoadingDiv currentColor={currentColor}/>
             :
             <>      
               {isMobile && <p className={projectStyle.guideText}>↓ Click to see more</p>}

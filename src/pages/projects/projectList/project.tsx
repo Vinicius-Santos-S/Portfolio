@@ -4,10 +4,10 @@ import { isMobile } from 'react-device-detect';
 
 import projectStyle from '../projects.module.scss'
 
-import { clientSideProjectDataType } from '../../../types'
+import { projectDataType } from '../../../types'
 
 interface keyIndex {
-  project: clientSideProjectDataType 
+  project: projectDataType 
   animation: any
 }
 
@@ -46,11 +46,11 @@ const Project: React.FC<keyIndex> = ({ project, animation }) => {
               See project!
             </motion.a>
             <div className={projectStyle.projectLanguageBox}>
-              <p style={{ color: project.prolanguageColor }}>{project.proLanguage}</p>
+              <p style={{ color: project.technology.techColor }}>{project.technology.techName}</p>
               <div
                 className={projectStyle.projectLanguageIcon}
                 style={{
-                  backgroundImage: `url(${project.proLanguageIconUrl})`
+                  backgroundImage: `url(${project.technology.techIconUrl})`
                 }}
               />
             </div>
@@ -91,11 +91,11 @@ const Project: React.FC<keyIndex> = ({ project, animation }) => {
               See project!
             </motion.a>
             <div className={projectStyle.projectLanguageBox}>
-              <p style={{ color: project.prolanguageColor }}>{project.proLanguage}</p>
+              <p style={{ color: project.technology.techColor }}>{project.technology.techName}</p>
               <div
                 className={projectStyle.projectLanguageIcon}
                 style={{
-                  backgroundImage: `url(${project.projectImageUrl})`
+                  backgroundImage: `url(${project.technology.techIconUrl})`
                 }}
               />
             </div>

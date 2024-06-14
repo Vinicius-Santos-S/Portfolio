@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { motion, useAnimation } from 'framer-motion'
+import { motion, useAnimation, AnimatePresence } from 'framer-motion'
 import aboutStyles from './about.module.scss';
 import { Link } from 'react-router-dom';
-import DivInView from './gridInView/divInView';
+import DivInView from './divInView';
 import styleVariables from '../../_variables.module.scss';
-
-import { readDocuments } from '../../service/firebaseConfig';
-import { clientSideProjectDataType } from '../../types'
+import LoadingDiv from '../../components/loadingAnimation/loadingDiv';
+import { fetchTechnologies } from '../../service/firebaseConfig';
+import { technologiesDataType } from '../../types'
 
 interface Iprop {
   currentColor: string
@@ -49,11 +49,14 @@ interface Iprop {
 
 
 const About: React.FC<Iprop> = ({currentColor}) => {
-  const [projectsData, setProjectsData] = useState<clientSideProjectDataType[]>([]);
+  const [technologiesData, setTechnologiesData] = useState<technologiesDataType[]>([])
+  const [isloading, setIsLoading] = useState(true)
   useEffect(() => {
     async function fetchData() {
-      const fetchedData = await readDocuments('Projects');
-      setProjectsData(fetchedData);
+      setIsLoading(true)
+      const fetchedData = await fetchTechnologies();
+      setTechnologiesData(fetchedData);
+      setIsLoading(false)
     }
     fetchData();
   }, []);
@@ -88,16 +91,18 @@ const About: React.FC<Iprop> = ({currentColor}) => {
 
   const mainAnimation = useAnimation();
   const titleAnimation = useAnimation();
-  const aboutCeapAnimation = useAnimation();  
+  const aboutCeapAnimation = useAnimation();
+  const proficiencesAnimation = useAnimation();   
   
   useEffect(() => {
     const sequence = async () => {
       await mainAnimation.start('animateMain');
       await titleAnimation.start('animateTitle');
       await aboutCeapAnimation.start('animateAboutCeap');
+      await proficiencesAnimation.start('animate')
     };
     sequence();
-  }, [mainAnimation, titleAnimation, aboutCeapAnimation]);
+  }, [mainAnimation, titleAnimation, aboutCeapAnimation, proficiencesAnimation]);
   
   return (
     <motion.div className={aboutStyles.mainDiv}
@@ -128,38 +133,51 @@ const About: React.FC<Iprop> = ({currentColor}) => {
       >
         <div className={aboutStyles.info}>
           <h2>About me and CEAP</h2>
-          <p>I am a developer with a solid foundation from CEAP, where I learned essential programming and web development skills.</p>
+          <p>I am a developer with a solid foundation from <a href="https://ceappedreira.org.br/">CEAP</a>, where I learned essential programming and web development skills. It was at CEAP that I discovered my passion for programming, and I am very grateful for the contribution that the institution has made in my life.</p>
         </div>
         <div className={aboutStyles.ceapImage}/>
       </motion.div>
 
-      <div className={aboutStyles.gridInView}>
+      <motion.div
+        className={aboutStyles.gridInView}
+        variants={animationsInstructions.proficiences}
+        initial={"initial"}
+        animate={proficiencesAnimation}
+      >
+
         <DivInView classToReceive="proficiencesContainer" variants={animationsInstructions.proficiences}>
-          <h2>What i know</h2>
-          <div className={aboutStyles.proficiencesGrid}>
-            {
-              projectsData.map((project, index) =>
-                <div
-                  className={aboutStyles.proficienceDiv}
-                  key={index}
-                >
+          <h2>What I Have Learned and Know</h2>
+          <AnimatePresence>
+          {
+            isloading ?
+            <LoadingDiv currentColor={currentColor}/>
+            :
+            <div className={aboutStyles.proficiencesGrid}>
+              {
+                technologiesData.map((technologie, index) =>
                   <div
-                    className={aboutStyles.icon}
-                    style={{ 
-                      backgroundImage: `url(${project.proLanguageIconUrl})` 
-                    }}
-                  />
-                  <h3
-                    style={{
-                      color: project.prolanguageColor
-                    }}
+                    className={aboutStyles.proficienceDiv}
+                    key={index}
                   >
-                    {project.proLanguage}
-                  </h3>
-                </div>
-              )
-            }
-          </div>
+                    <div
+                      className={aboutStyles.icon}
+                      style={{ 
+                        backgroundImage: `url(${technologie.techIconUrl})` 
+                      }}
+                    />
+                    <h3
+                      style={{
+                        color: technologie.techColor
+                      }}
+                    >
+                      {technologie.techName}
+                    </h3>
+                  </div>
+                )
+              }
+            </div>
+          }
+          </AnimatePresence>
         </DivInView>
         <DivInView classToReceive="buttonContainer" variants={animationsInstructions.button}>
           <Link to={"/projects"}>
@@ -172,7 +190,7 @@ const About: React.FC<Iprop> = ({currentColor}) => {
             </motion.div>
           </Link>
         </DivInView>
-      </div>
+      </motion.div>
     </motion.div>
   )
 }

@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     .aboutCeapAndMe {
-        border: 1px solid red;
         display: flex;
         gap: 50px;
         min-height: 250px;
@@ -20,6 +19,9 @@
             }
             p {
                 text-align: center;
+                a {
+                    color: $lapis-lazuli;
+                }
             }
         }
         .ceapImage {
@@ -42,7 +44,6 @@
 
     .gridInView {
         margin: 100px 0px 100px 0px;
-        border: 1px solid red;
         display: flex;
         flex-direction: column;
         text-align: center;
@@ -51,13 +52,12 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            .proficiencesGrid {
+            .proficiencesGrid { 
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
                 .proficienceDiv {
                     display: flex;
                     flex-direction: column;
-                    border: 1px solid greenyellow;
     
                     .icon {
                         background-position: center;

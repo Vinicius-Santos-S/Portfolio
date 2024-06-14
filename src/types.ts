@@ -4,14 +4,22 @@ import { CustomDomComponent } from 'framer-motion';
 interface projectDataType {
     name: string
     info: string
-    proLanguage: string
-    prolanguageColor: string
     link: string
+    projectImageUrl: string
+    techId: string
+    technology: {
+        techName: string
+        techColor: string
+        techIconUrl: string
+    }
 };
-interface clientSideProjectDataType extends projectDataType {
-    proLanguageIconUrl?: string
-    projectImageUrl?: string
-}
+
+interface technologiesDataType {
+    techName: string
+    techColor: string
+    techIconUrl: string   
+};
+
 
 interface routeData {
     name: string
@@ -26,4 +34,4 @@ interface contactData {
 }
 
 
-export type {projectDataType, clientSideProjectDataType, routeData, contactData};
+export type {projectDataType, technologiesDataType, routeData, contactData};

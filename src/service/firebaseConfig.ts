@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
-import { projectDataType, clientSideProjectDataType } from '../types'
+import { projectDataType, technologiesDataType } from '../types'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,32 +20,60 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app, "gs://portfolio-c7e4b.appspot.com");
 
-export async function readDocuments(collectionName: string): Promise<projectDataType[]> {
-  const querySnapshot = await getDocs(collection(db, collectionName));
-  
-  const promises = querySnapshot.docs.map(async (doc) => {
-    const projectData = doc.data() as clientSideProjectDataType;
-    
-    try {
-      const imageUrl = await getDownloadURL(ref(storage, `images/${doc.id}.jpg`));
-      projectData.projectImageUrl = imageUrl;
-    } catch (error) {
-      console.error(`Error getting image URL for document ${doc.id}: `, error);
-    }
-    
-    try {
-      const iconUrl = await getDownloadURL(ref(storage, `proLanguagesIcons/${projectData.proLanguage}Icon.png`));
-      projectData.proLanguageIconUrl = iconUrl;
-    } catch (error) {
-      console.error(`Error getting icon URL for language ${projectData.proLanguage}: `, error);
-    }
-    
-    return projectData;
-  });
+export async function fetchProjectsAndTechnologies(): Promise<projectDataType[]> {
+  const projectsData:projectDataType[] = [];
+  const projectsSnapshot = await getDocs(collection(db, "Projects"));
 
-  const projectsData = await Promise.all(promises);
-  return projectsData;
-}
+  for (const projectSnapshot of projectsSnapshot.docs) {
+    const projectData = projectSnapshot.data();
+    const techIdRef = doc(db, "Technologies", projectData.techId);
+    const technologyDoc = await getDoc(techIdRef);
+    projectData.technology = technologyDoc.data()
+
+    //Getting project image
+    try {
+      const projectIconUrl = await getDownloadURL(ref(storage, `images/${projectSnapshot.id}.jpg`));
+      projectData.projectImageUrl = projectIconUrl
+    } catch (error) {
+      console.log(`Project image ${projectData.name} was not found...` )
+    }
+
+    //Getting technology icons
+    try {
+      const techIconUrl = await getDownloadURL(ref(storage, `technologiesIcons/${projectData.technology.techName}Icon.png`));
+      projectData.technology.techIconUrl = techIconUrl
+
+    } catch (error) {
+      console.log(`Tech icon ${projectData.technology.name} was not found...` )
+    }
+
+    projectsData.push(projectData as projectDataType)
+  }
+  
+  return projectsData
+} 
+
+export async function fetchTechnologies(): Promise<technologiesDataType[]> {
+  const technologiesData: technologiesDataType [] = [] 
+  const technologiesSnapshot = await getDocs(collection(db, "Technologies"));
+  for(const technology of technologiesSnapshot.docs){
+    const tecnologieSnapshot = technology.data()
+
+    try {
+      const techIconUrl = await getDownloadURL(ref(storage, `technologiesIcons/${tecnologieSnapshot.techName}Icon.png`));
+      tecnologieSnapshot.techIconUrl = techIconUrl
+
+    } catch (error) {
+      console.log(`Tech icon ${tecnologieSnapshot.techName} was not found...` )
+    }
+
+
+
+    technologiesData.push(tecnologieSnapshot as technologiesDataType)
+  }
+  return technologiesData;
+};
+
 
 
 

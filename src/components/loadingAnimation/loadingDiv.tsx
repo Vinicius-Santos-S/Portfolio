@@ -1,11 +1,16 @@
 import loadingDivStyle  from './loadingDiv.module.scss'
 import { MotionLoadingIcon } from '../../svgImports'
-const loadingDiv = ({}) => {
+
+interface Iprops {
+  currentColor: string
+}
+
+const loadingDiv: React.FC<Iprops> = ({currentColor}) => {
 
   return (
     <div className={loadingDivStyle.loadingContainer}>
       <MotionLoadingIcon
-        fill='#7E1946'
+        fill={currentColor}
         className={loadingDivStyle.spinner}
         animate={{ rotate: 360 }}
         exit={{ opacity: 0 }}

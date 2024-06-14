@@ -9,25 +9,24 @@ interface IProps {
   onUpdateFilter: (language: string) => void;
 }
 
-const getFields = <T,>(input: Array<T>, field: keyof T): Array<T[keyof T]> => {
-  const output: Array<T[keyof T]> = [];
-  for (let i = 0; i < input.length; ++i) {
-    output.push(input[i][field]);
+const getFields = (technologiesData:projectDataType []) => {
+  const array = []
+  for(const technologyData of technologiesData){
+    array.push(technologyData.technology.techName)
   }
-  return output;
+  return [...new Set(array)]
 };
 
 const Filter: React.FC<IProps> = ({ data, filter, onUpdateFilter }) => {
-  const programmingLanguages: string[] = getFields(
-    data,
-    "proLanguage"
-  ) as string[];
+
+  const programmingLanguages: string[] = getFields(data);
+
   const TreatedLanguages: string[] = [...new Set(programmingLanguages)];
 
   const handleClick = (language: string) => {
     if (filter === language) {
       onUpdateFilter("");
-    } else {
+    } else {    
       onUpdateFilter(language);
     }
   };
