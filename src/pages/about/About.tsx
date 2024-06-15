@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { motion, useAnimation, AnimatePresence } from 'framer-motion'
 import aboutStyles from './about.module.scss';
 import { Link } from 'react-router-dom';
-import DivInView from './divInView';
+import DivInView from '../../components/divInView/divInView';
+import AwaitAnimationDiv from '../../components/awaitAnimationDiv/awaitAnimationDiv';
 import styleVariables from '../../_variables.module.scss';
 import LoadingDiv from '../../components/loadingAnimation/loadingDiv';
 import { fetchTechnologies } from '../../service/firebaseConfig';
@@ -12,45 +13,10 @@ interface Iprop {
   currentColor: string
 }
 
-
-// const testData: projectDataType[] = [
-//   {
-//     name: 'uga',
-//     info: 'uga',
-//     proLanguage: 'React',
-//     prolanguageColor: 'rgb(97, 219, 251)',
-//     proLanguageIconUrl: reactIcon,
-//     projectImageId: 'uga',
-//     projectImageUrl: 'uga',
-//     link: 'uga',
-//   },
-//   {
-//     name: 'uga',
-//     info: 'uga',
-//     proLanguage: 'Python',
-//     prolanguageColor: 'rgb(75, 139, 190)',
-//     proLanguageIconUrl: pythonIcon,
-//     projectImageId: 'uga',
-//     projectImageUrl: 'uga',
-//     link: 'uga',
-//   },
-//   {
-//     name: 'uga',
-//     info: 'uga',
-//     proLanguage: 'C',
-//     prolanguageColor: 'rgb(92, 107, 192)',
-//     proLanguageIconUrl: cIcon,
-//     projectImageId: 'uga',
-//     projectImageUrl: 'uga',
-//     link: 'uga',
-//   }
-// ]
-
-
-
 const About: React.FC<Iprop> = ({currentColor}) => {
   const [technologiesData, setTechnologiesData] = useState<technologiesDataType[]>([])
   const [isloading, setIsLoading] = useState(true)
+
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true)
@@ -60,92 +26,97 @@ const About: React.FC<Iprop> = ({currentColor}) => {
     }
     fetchData();
   }, []);
-  
-  const animationsInstructions = {
-    main: {
-      initialMain: { x: 1000 },
-      animateMain: { x: 0 },
-      exitMain: { x: -1250 },
-    },
-    title: {
-      animateTitle: { color: currentColor }
-    },
-    aboutCeap: {
-      initialAboutCeap: { opacity: 0 },
-      animateAboutCeap: { opacity: 1, transition: { delay: 0.6 } }
-    },
-    proficiences: {
-      initial: { opacity: 0 },
-      animate: { opacity: 1 },
-    },
-    button: {
-      initial: { opacity: 0 },
-      animate: { opacity: 1 },
-      hovering: {
-        color: styleVariables.black,
-        backgroundColor: styleVariables.babyPowder
-      }
-    } 
-
-  }
 
   const mainAnimation = useAnimation();
   const titleAnimation = useAnimation();
   const aboutCeapAnimation = useAnimation();
-  const proficiencesAnimation = useAnimation();   
+  const gridInViewAnimation = useAnimation();   
   
   useEffect(() => {
     const sequence = async () => {
       await mainAnimation.start('animateMain');
       await titleAnimation.start('animateTitle');
       await aboutCeapAnimation.start('animateAboutCeap');
-      await proficiencesAnimation.start('animate')
+      await gridInViewAnimation.start('animateGridInView')
     };
     sequence();
-  }, [mainAnimation, titleAnimation, aboutCeapAnimation, proficiencesAnimation]);
+  }, [mainAnimation, titleAnimation, aboutCeapAnimation, gridInViewAnimation]);
   
-  return (
-    <motion.div className={aboutStyles.mainDiv}
-      variants={animationsInstructions.main}
-      initial="initialMain"
-      animate={mainAnimation}
-      exit="exitMain"
-      transition={{ 
-        type: 'spring', 
-        stiffness: 120, 
-        damping: 20, 
-        duration: 0.5, 
-        ease: 'easeOut'
-      }}
-    >
-      <motion.h1
-        variants={animationsInstructions.title}
-        animate={titleAnimation}
-      >
-        About me
-      </motion.h1>
+  const animationsInstructions = {  
+    main: {
+      initialMain: { x: 1000 },
+      animateMain: { x: 0 },
+      exitMain: { x: -1250 },
+    },
 
-      <motion.div 
-        className={aboutStyles.aboutCeapAndMe}
-        variants={animationsInstructions.aboutCeap}
-        initial="initialAboutCeap"
-        animate={aboutCeapAnimation}
-      >
-        <div className={aboutStyles.info}>
-          <h2>About me and CEAP</h2>
-          <p>I am a developer with a solid foundation from <a href="https://ceappedreira.org.br/">CEAP</a>, where I learned essential programming and web development skills. It was at CEAP that I discovered my passion for programming, and I am very grateful for the contribution that the institution has made in my life.</p>
-        </div>
-        <div className={aboutStyles.ceapImage}/>
-      </motion.div>
+    titleContainer: {
+      initial: {
+      },
+      animateTitle: {
+        color: currentColor,
+      }
+    },
 
-      <motion.div
-        className={aboutStyles.gridInView}
-        variants={animationsInstructions.proficiences}
-        initial={"initial"}
-        animate={proficiencesAnimation}
-      >
+    aboutCeapAndMeContainer: {
+      initial: {
+        opacity: 0
+      },
+      animateAboutCeap: {
+        opacity: 1,
+        transition: { delay: 0.6 }
+      }
+    },
 
-        <DivInView classToReceive="proficiencesContainer" variants={animationsInstructions.proficiences}>
+    gridInViewContainer: {
+      initial: {
+        opacity: 0
+      },
+      animateGridInView: {
+        opacity: 1,
+        transition: { delay: 0.6 }
+      }
+    },
+
+    proficiencesContainer: {
+      initial: {
+        opacity: 0
+      },
+      animate: {
+        opacity: 1
+      }
+    },
+
+    buttonContainer: {
+      initial: {
+        opacity: 0
+      },
+      animate: {
+        opacity: 1
+      }
+    }
+  }
+
+  const awaitAnimationDivData = [
+    {
+      class: { cssModule: aboutStyles, class: "aboutCeapAndMeContainer" },
+      variants: animationsInstructions.aboutCeapAndMeContainer,
+      useAnimation: aboutCeapAnimation,
+      Children: 
+        <>
+          <div className={aboutStyles.info}>
+            <h2>About me and CEAP</h2>
+            <p>I am a developer with a solid foundation from <a href="https://ceappedreira.org.br/">CEAP</a>, where I learned essential programming and web development skills. It was at CEAP that I discovered my passion for programming, and I am very grateful for the contribution that the institution has made in my life.</p>
+          </div>
+          <div className={aboutStyles.ceapImage}/>
+        </>
+    },
+    {
+      class: { cssModule: aboutStyles, class: "animateGridInViewContainer" },
+      variants: animationsInstructions.gridInViewContainer,
+      useAnimation: gridInViewAnimation,
+      Children: 
+        <>
+          <DivInView classToReceive={{cssModule: aboutStyles, class: "proficiencesContainer"}} variants={animationsInstructions.proficiencesContainer}>
           <h2>What I Have Learned and Know</h2>
           <AnimatePresence>
           {
@@ -178,19 +149,52 @@ const About: React.FC<Iprop> = ({currentColor}) => {
             </div>
           }
           </AnimatePresence>
-        </DivInView>
-        <DivInView classToReceive="buttonContainer" variants={animationsInstructions.button}>
-          <Link to={"/projects"}>
-            <motion.div
-              variants={animationsInstructions.button}
-              className={aboutStyles.button}
-              whileHover="hovering"
-            >
-                Check my projects
-            </motion.div>
-          </Link>
-        </DivInView>
-      </motion.div>
+          </DivInView>
+          <DivInView classToReceive={{cssModule: aboutStyles, class: "buttonContainer"}} variants={animationsInstructions.buttonContainer}>
+            <Link to={"/projects"}>
+              <motion.div
+                className={aboutStyles.button}
+                whileHover={{
+                  color: styleVariables.black,
+                  backgroundColor: styleVariables.babyPowder
+                }}
+              >
+                  Check my projects
+              </motion.div>
+            </Link>
+          </DivInView>
+        </>
+    }
+
+  ]
+
+  return (
+    <motion.div className={aboutStyles.mainDiv}
+      variants={animationsInstructions.main}
+      initial="initialMain"
+      animate={mainAnimation}
+      exit="exitMain"
+      transition={{ 
+        type: 'spring', 
+        stiffness: 120, 
+        damping: 20, 
+        duration: 0.5, 
+        ease: 'easeOut'
+      }}
+    >
+      <motion.h1
+        variants={animationsInstructions.titleContainer}
+        animate={titleAnimation}
+      >
+        About me
+      </motion.h1>
+      {
+        awaitAnimationDivData.map((div, index) =>
+          <AwaitAnimationDiv  key={index} classToReceive={div.class} variants={div.variants} useAnimation={div.useAnimation}>
+            {div.Children}
+          </AwaitAnimationDiv>
+        )
+      }
     </motion.div>
   )
 }

@@ -30,7 +30,7 @@ const App = () => {
 
     function setCurretColor (currentPath:string) {
         if(currentPath === '/'){
-          return variables.amaranthPpurple
+          return variables.amaranthPurple
         }
         else if(currentPath === '/about'){
           return variables.lapisLazuli
@@ -50,7 +50,7 @@ const App = () => {
                     </Routes>
                 </AnimatePresence>
             </Template>
-            <Footer/>
+            <Footer currentColor={setCurretColor(location.pathname)}/>
         </>
     )
 }

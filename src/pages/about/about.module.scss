@@ -3,7 +3,7 @@
 .mainDiv {
     display: flex;
     flex-direction: column;
-    .aboutCeapAndMe {
+    .aboutCeapAndMeContainer {
         display: flex;
         gap: 50px;
         min-height: 250px;
@@ -37,17 +37,18 @@
         }
     }
     @media (max-width: 565px) {
-        .aboutCeapAndMe {
+        .aboutCeapAndMeContainer {
             flex-direction: column;
         }
     }
 
-    .gridInView {
+    .animateGridInViewContainer {
         margin: 100px 0px 100px 0px;
         display: flex;
         flex-direction: column;
         text-align: center;
         gap: 100px;
+        
         .proficiencesContainer {
             display: flex;
             flex-direction: column;

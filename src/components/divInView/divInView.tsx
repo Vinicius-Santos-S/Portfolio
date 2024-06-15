@@ -1,9 +1,8 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import aboutStyles from './about.module.scss';
 
 interface gridDiv {
-    classToReceive: string
+    classToReceive: { cssModule: any, class:string}
     variants: {}
     children: React.ReactNode
 }
@@ -15,7 +14,7 @@ const divInView: React.FC<gridDiv> = ({classToReceive, variants, children}) => {
     return (
         <motion.div
             ref={ref}
-            className={aboutStyles[classToReceive]}
+            className={`${classToReceive.cssModule[classToReceive.class]}`}
             variants={variants}
             initial={"initial"}
             animate={inView ? "animate" : "initial"}

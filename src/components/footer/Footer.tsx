@@ -3,21 +3,25 @@ import { contactData } from '../../types'
 
 import { MotionGitHubIcon, MotionLinkendinIcon } from "../../svgImports"
 
+interface Iprop {
+  currentColor: string
+}
+
 const contactsData: contactData[] = [
   {
     name: "Github",
-    link: "https://google.com",
+    link: "https://github.com/Vinicius-Santos-S",
     iconSvg: MotionGitHubIcon
   },
   {
     name: "Linkedin",
-    link: "https://google.com",
+    link: "www.linkedin.com/in/vini-santos-silva",
     iconSvg: MotionLinkendinIcon
   },
 
 ]
 
-const Footer = () => {
+const Footer: React.FC<Iprop> = ({currentColor}) => {
   return (
     <footer className={footerStyle.footerContainer}>
       <address className={footerStyle.footerWrapper}>
@@ -32,7 +36,7 @@ const Footer = () => {
                     className={footerStyle.socialIcon}
                     whileHover={{
                       scale: 1.1,
-                      fill: 'rgb(222, 222, 222)'
+                      fill: currentColor
                     }}
                   />
                 </a>
