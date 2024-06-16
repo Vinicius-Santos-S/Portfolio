@@ -13,9 +13,22 @@ interface Iprop {
   currentColor: string
 }
 
-const About: React.FC<Iprop> = ({currentColor}) => {
+const About: React.FC<Iprop> = ({ currentColor }) => {
   const [technologiesData, setTechnologiesData] = useState<technologiesDataType[]>([])
   const [isloading, setIsLoading] = useState(true)
+
+  
+  const getFields = (technologiesData: technologiesDataType[]) => {
+    const array = []
+    for (const technologyData of technologiesData) {
+      array.push(technologyData.techType)
+    }
+    return [...new Set(array)]
+  };
+
+  const filterByTechType = (technologie: technologiesDataType[], techType: string): technologiesDataType[] => {
+    return technologie.filter(project => project.techType === techType);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -30,8 +43,8 @@ const About: React.FC<Iprop> = ({currentColor}) => {
   const mainAnimation = useAnimation();
   const titleAnimation = useAnimation();
   const aboutCeapAnimation = useAnimation();
-  const gridInViewAnimation = useAnimation();   
-  
+  const gridInViewAnimation = useAnimation();
+
   useEffect(() => {
     const sequence = async () => {
       await mainAnimation.start('animateMain');
@@ -41,8 +54,8 @@ const About: React.FC<Iprop> = ({currentColor}) => {
     };
     sequence();
   }, [mainAnimation, titleAnimation, aboutCeapAnimation, gridInViewAnimation]);
-  
-  const animationsInstructions = {  
+
+  const animationsInstructions = {
     main: {
       initialMain: { x: 1000 },
       animateMain: { x: 0 },
@@ -101,56 +114,52 @@ const About: React.FC<Iprop> = ({currentColor}) => {
       class: { cssModule: aboutStyles, class: "aboutCeapAndMeContainer" },
       variants: animationsInstructions.aboutCeapAndMeContainer,
       useAnimation: aboutCeapAnimation,
-      Children: 
+      Children:
         <>
           <div className={aboutStyles.info}>
             <h2>About me and CEAP</h2>
             <p>I am a developer with a solid foundation from <a href="https://ceappedreira.org.br/">CEAP</a>, where I learned essential programming and web development skills. It was at CEAP that I discovered my passion for programming, and I am very grateful for the contribution that the institution has made in my life.</p>
           </div>
-          <div className={aboutStyles.ceapImage}/>
+          <div className={aboutStyles.ceapImage} />
         </>
     },
     {
       class: { cssModule: aboutStyles, class: "animateGridInViewContainer" },
       variants: animationsInstructions.gridInViewContainer,
       useAnimation: gridInViewAnimation,
-      Children: 
+      Children:
         <>
-          <DivInView classToReceive={{cssModule: aboutStyles, class: "proficiencesContainer"}} variants={animationsInstructions.proficiencesContainer}>
-            <h2>What I Have Learned and Know</h2>
+          <DivInView classToReceive={{ cssModule: aboutStyles, class: "proficiencesContainer" }} variants={animationsInstructions.proficiencesContainer}>
+            <h2>What I have learned and know</h2>
             <AnimatePresence>
-            {
-              isloading ?
-              <LoadingDiv currentColor={currentColor}/>
-              :
-              <div className={aboutStyles.proficiencesGrid}>
-                {
-                  technologiesData.map((technologie, index) =>
-                    <div
-                      className={aboutStyles.proficienceDiv}
-                      key={index}
-                    >
-                      <div
-                        className={aboutStyles.icon}
-                        style={{ 
-                          backgroundImage: `url(${technologie.techIconUrl})` 
-                        }}
-                      />
-                      <h3
-                        style={{
-                          color: technologie.techColor
-                        }}
-                      >
-                        {technologie.techName}
-                      </h3>
-                    </div>
-                  )
-                }
-              </div>
-            }
+              {
+                isloading ?
+                  <LoadingDiv currentColor={currentColor} />
+                  :
+                  <>
+                    {
+                      getFields(technologiesData).map((technologieToFilter, index) =>
+                        <div className={aboutStyles.techTypeContainer} key={index}>
+                          <h3>{technologieToFilter}</h3>
+                          <ul className={aboutStyles.technologiesContainer} >
+                            {
+                              filterByTechType(technologiesData, technologieToFilter).map((techName, index) =>
+                                <li key={index}>
+                                  <div className={aboutStyles.techIcon} style={{
+                                    backgroundImage: `url(${techName.techIconUrl})`
+                                  }}/>
+                                  <p style={{ color: techName.techColor}}>{techName.techName}</p>
+                                </li>
+                            )}
+                          </ul>
+                        </div>
+                      )
+                    }
+                  </>
+              }
             </AnimatePresence>
           </DivInView>
-          <DivInView classToReceive={{cssModule: aboutStyles, class: "buttonContainer"}} variants={animationsInstructions.buttonContainer}>
+          <DivInView classToReceive={{ cssModule: aboutStyles, class: "buttonContainer" }} variants={animationsInstructions.buttonContainer}>
             <Link to={"/projects"}>
               <motion.div
                 className={aboutStyles.button}
@@ -159,7 +168,7 @@ const About: React.FC<Iprop> = ({currentColor}) => {
                   backgroundColor: styleVariables.babyPowder
                 }}
               >
-                  Check my projects
+                Check my projects
               </motion.div>
             </Link>
           </DivInView>
@@ -167,30 +176,17 @@ const About: React.FC<Iprop> = ({currentColor}) => {
     }
 
   ]
-
-  // const getFields = (technologiesData:technologiesDataType []) => {
-  //   const array = []
-  //   for(const technologyData of technologiesData){
-  //     array.push(technologyData.techType)
-  //   }
-  //   return [...new Set(array)]
-  // };
-
-  // const filterByTechType = (technologie: technologiesDataType[], techType: string): technologiesDataType[] => {
-  //     return technologie.filter(project => project.techType === techType);
-  // };
-
   return (
     <motion.div className={aboutStyles.mainDiv}
       variants={animationsInstructions.main}
       initial="initialMain"
       animate={mainAnimation}
       exit="exitMain"
-      transition={{ 
-        type: 'spring', 
-        stiffness: 120, 
-        damping: 20, 
-        duration: 0.5, 
+      transition={{
+        type: 'spring',
+        stiffness: 120,
+        damping: 20,
+        duration: 0.5,
         ease: 'easeOut'
       }}
     >
@@ -201,25 +197,9 @@ const About: React.FC<Iprop> = ({currentColor}) => {
         About me
       </motion.h1>
 
-      {/* {
-        getFields(technologiesData).map((technologieToFilter,index)=> 
-          <div key={index}>
-            <h2>{technologieToFilter}</h2>
-            <ul>  
-              {filterByTechType(technologiesData, technologieToFilter ).map((techName, index) => 
-                <li key={index}>
-                  {techName.techName}W
-                </li>
-              )}
-            </ul>
-          </div>
-        )
-      } */}
-
-
       {
         awaitAnimationDivData.map((div, index) =>
-          <AwaitAnimationDiv  key={index} classToReceive={div.class} variants={div.variants} useAnimation={div.useAnimation}>
+          <AwaitAnimationDiv key={index} classToReceive={div.class} variants={div.variants} useAnimation={div.useAnimation}>
             {div.Children}
           </AwaitAnimationDiv>
         )
