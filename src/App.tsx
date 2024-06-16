@@ -1,46 +1,47 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+// import { Routes, Route, useLocation } from 'react-router-dom';
+// import { AnimatePresence } from 'framer-motion';
 
-import NavBar from './components/navBar/NavBar';
-import Footer from './components/footer/Footer';
-import Template from './pages/template';
+// import NavBar from './components/navBar/NavBar';
+// import Footer from './components/footer/Footer';
+// import Template from './pages/template';
 
-import Home from './pages/home/Home'
-import About from './pages/about/About'
-import Projects from './pages/projects/Projects'
+// import Home from './pages/home/Home'
+// import About from './pages/about/About'
+// import Projects from './pages/projects/Projects'
 
-import "./App.scss"
-import { useEffect } from 'react';
+// import "./App.scss"
+// import { useEffect } from 'react';
 
-import variables from './_variables.module.scss';
+// import variables from './_variables.module.scss';
 
 const App = () => {
-    const location = useLocation()
+    // const location = useLocation()
 
-    const scrollToTop = () => {
-        window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-        });
-    };
+    // const scrollToTop = () => {
+    //     window.scrollTo({
+    //     top: 0,
+    //     behavior: 'smooth'
+    //     });
+    // };
     
-    useEffect(() => {
-        scrollToTop()
-    },[location])
+    // useEffect(() => {
+    //     scrollToTop()
+    // },[location])
 
-    function setCurretColor (currentPath:string) {
-        if(currentPath === '/'){
-          return variables.amaranthPurple
-        }
-        else if(currentPath === '/about'){
-          return variables.lapisLazuli
-        }
-        return variables.murrey
-    }
+    // function setCurretColor (currentPath:string) {
+    //     if(currentPath === '/'){
+    //       return variables.amaranthPurple
+    //     }
+    //     else if(currentPath === '/about'){
+    //       return variables.lapisLazuli
+    //     }
+    //     return variables.murrey
+    // }
 
     return (
         <>
-            <NavBar currentPath={location.pathname} currentColor={setCurretColor(location.pathname)}/>
+            <h1>Manutenção no banco de dados :/ </h1>
+            {/* <NavBar currentPath={location.pathname} currentColor={setCurretColor(location.pathname)}/>
             <Template currentColor={setCurretColor(location.pathname)}>
                 <AnimatePresence mode='wait'>
                     <Routes key={location.pathname} location={location}>
@@ -50,7 +51,7 @@ const App = () => {
                     </Routes>
                 </AnimatePresence>
             </Template>
-            <Footer currentColor={setCurretColor(location.pathname)}/>
+            <Footer currentColor={setCurretColor(location.pathname)}/> */}
         </>
     )
 }

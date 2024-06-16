@@ -17,6 +17,7 @@ interface projectDataType {
 interface technologiesDataType {
     techName: string
     techColor: string
+    techType: string
     techIconUrl: string   
 };
 
