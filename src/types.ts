@@ -10,6 +10,7 @@ interface projectDataType {
     technology: {
         techName: string
         techColor: string
+        techType: string
         techIconUrl: string
     }
 };

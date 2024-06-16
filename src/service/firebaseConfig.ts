@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, } from "firebase/firestore";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
@@ -51,7 +51,7 @@ export async function fetchProjectsAndTechnologies(): Promise<projectDataType[]>
   }
   
   return projectsData
-} 
+}
 
 export async function fetchTechnologies(): Promise<technologiesDataType[]> {
   const technologiesData: technologiesDataType [] = [] 
@@ -66,8 +66,6 @@ export async function fetchTechnologies(): Promise<technologiesDataType[]> {
     } catch (error) {
       console.log(`Tech icon ${tecnologieSnapshot.techName} was not found...` )
     }
-
-
 
     technologiesData.push(tecnologieSnapshot as technologiesDataType)
   }

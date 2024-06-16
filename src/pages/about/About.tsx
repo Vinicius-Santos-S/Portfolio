@@ -117,38 +117,38 @@ const About: React.FC<Iprop> = ({currentColor}) => {
       Children: 
         <>
           <DivInView classToReceive={{cssModule: aboutStyles, class: "proficiencesContainer"}} variants={animationsInstructions.proficiencesContainer}>
-          <h2>What I Have Learned and Know</h2>
-          <AnimatePresence>
-          {
-            isloading ?
-            <LoadingDiv currentColor={currentColor}/>
-            :
-            <div className={aboutStyles.proficiencesGrid}>
-              {
-                technologiesData.map((technologie, index) =>
-                  <div
-                    className={aboutStyles.proficienceDiv}
-                    key={index}
-                  >
+            <h2>What I Have Learned and Know</h2>
+            <AnimatePresence>
+            {
+              isloading ?
+              <LoadingDiv currentColor={currentColor}/>
+              :
+              <div className={aboutStyles.proficiencesGrid}>
+                {
+                  technologiesData.map((technologie, index) =>
                     <div
-                      className={aboutStyles.icon}
-                      style={{ 
-                        backgroundImage: `url(${technologie.techIconUrl})` 
-                      }}
-                    />
-                    <h3
-                      style={{
-                        color: technologie.techColor
-                      }}
+                      className={aboutStyles.proficienceDiv}
+                      key={index}
                     >
-                      {technologie.techName}
-                    </h3>
-                  </div>
-                )
-              }
-            </div>
-          }
-          </AnimatePresence>
+                      <div
+                        className={aboutStyles.icon}
+                        style={{ 
+                          backgroundImage: `url(${technologie.techIconUrl})` 
+                        }}
+                      />
+                      <h3
+                        style={{
+                          color: technologie.techColor
+                        }}
+                      >
+                        {technologie.techName}
+                      </h3>
+                    </div>
+                  )
+                }
+              </div>
+            }
+            </AnimatePresence>
           </DivInView>
           <DivInView classToReceive={{cssModule: aboutStyles, class: "buttonContainer"}} variants={animationsInstructions.buttonContainer}>
             <Link to={"/projects"}>
@@ -167,6 +167,18 @@ const About: React.FC<Iprop> = ({currentColor}) => {
     }
 
   ]
+
+  const getFields = (technologiesData:technologiesDataType []) => {
+    const array = []
+    for(const technologyData of technologiesData){
+      array.push(technologyData.techType)
+    }
+    return [...new Set(array)]
+  };
+
+  const filterByTechType = (technologie: technologiesDataType[], techType: string): technologiesDataType[] => {
+      return technologie.filter(project => project.techType === techType);
+  };
 
   return (
     <motion.div className={aboutStyles.mainDiv}
@@ -188,6 +200,23 @@ const About: React.FC<Iprop> = ({currentColor}) => {
       >
         About me
       </motion.h1>
+
+      {/* {
+        getFields(technologiesData).map((technologieToFilter,index)=> 
+          <div key={index}>
+            <h2>{technologieToFilter}</h2>
+            <ul>  
+              {filterByTechType(technologiesData, technologieToFilter ).map((techName, index) => 
+                <li key={index}>
+                  {techName.techName}W
+                </li>
+              )}
+            </ul>
+          </div>
+        )
+      } */}
+
+
       {
         awaitAnimationDivData.map((div, index) =>
           <AwaitAnimationDiv  key={index} classToReceive={div.class} variants={div.variants} useAnimation={div.useAnimation}>

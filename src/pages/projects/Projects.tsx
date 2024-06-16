@@ -10,8 +10,6 @@ import LoadingDiv from '../../components/loadingAnimation/loadingDiv';
 import projectStyle from './projects.module.scss'
 
 import { projectDataType }  from '../../types'
-// import testeImage from  '../../1.jpg'
-// import testeImageReact from  '../../icon/proficiencesIcons/reactIcon.png'
 
 interface Iprop {
   currentColor: string
@@ -21,19 +19,6 @@ const Projects: React.FC<Iprop> = ({currentColor}) => {
   const [projectsData, setProjectsData] = useState<projectDataType[]>([]);
   const [currentFilter, setCurrentFilter] = useState<string>("");
   const [isloading, setIsLoading] = useState(true)
-
-  // const TestData : projectDataType[] = [
-  //   {
-  //     name: 'Tic-Tac-Toe Game',
-  //     info: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos velit a ratione eius odio assumenda minus aut omnis ab. Quasi repudiandae expedita eveniet ut porro error facilis sunt laudantium veniam!",
-  //     proLanguage: 'React',
-  //     prolanguageColor: 'rgb(97, 219, 251)',
-  //     projectImageId: 'infoo',
-  //     projectImageUrl: testeImage,
-  //     proLanguageIconUrl: testeImageReact,
-  //     link: 'infoo'
-  //   },
-  // ]
 
   useEffect(() => {
     async function fetchData() {
