@@ -168,17 +168,17 @@ const About: React.FC<Iprop> = ({currentColor}) => {
 
   ]
 
-  const getFields = (technologiesData:technologiesDataType []) => {
-    const array = []
-    for(const technologyData of technologiesData){
-      array.push(technologyData.techType)
-    }
-    return [...new Set(array)]
-  };
+  // const getFields = (technologiesData:technologiesDataType []) => {
+  //   const array = []
+  //   for(const technologyData of technologiesData){
+  //     array.push(technologyData.techType)
+  //   }
+  //   return [...new Set(array)]
+  // };
 
-  const filterByTechType = (technologie: technologiesDataType[], techType: string): technologiesDataType[] => {
-      return technologie.filter(project => project.techType === techType);
-  };
+  // const filterByTechType = (technologie: technologiesDataType[], techType: string): technologiesDataType[] => {
+  //     return technologie.filter(project => project.techType === techType);
+  // };
 
   return (
     <motion.div className={aboutStyles.mainDiv}
